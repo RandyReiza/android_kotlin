@@ -2,12 +2,11 @@ package com.example.barvolume
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity() {
     private lateinit var edtWidth: EditText
     private lateinit var edtHeight: EditText
     private lateinit var edtLength: EditText
@@ -28,16 +27,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnCalculate = findViewById(R.id.btn_calculate)
         tvResult = findViewById(R.id.tv_result)
 
-        btnCalculate.setOnClickListener(this)
-
-        if (savedInstanceState != null) {
-            val result = savedInstanceState.getString(STATE_RESULT)
-            tvResult.text = result
-        }
-    }
-
-    override fun onClick(v: View?) {
-        if (v?.id == R.id.btn_calculate) {
+        btnCalculate.setOnClickListener {
             val inputLength = edtLength.text.toString().trim()
             val inputWidth = edtWidth.text.toString().trim()
             val inputHeight = edtHeight.text.toString().trim()
@@ -61,6 +51,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val volume = inputLength.toDouble() * inputWidth.toDouble() * inputHeight.toDouble()
                 tvResult.text = volume.toString()
             }
+        }
+
+        if (savedInstanceState != null) {
+            val result = savedInstanceState.getString(STATE_RESULT)
+            tvResult.text = result
         }
     }
 
