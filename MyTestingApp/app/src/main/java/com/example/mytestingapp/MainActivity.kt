@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
 
         tvText = findViewById(R.id.tv_text)
+        btnSetValue = findViewById(R.id.btn_set_value)
         btnSetValue.setOnClickListener(this)
     }
 
