@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         names.add("Yoza")
 
         imgPreview = findViewById(R.id.img_preview)
-        imgPreview.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fronalpstock_big))
+        Glide.with(this).load(R.drawable.fronalpstock_big).into(imgPreview)
     }
 
     override fun onClick(v: View?) {
