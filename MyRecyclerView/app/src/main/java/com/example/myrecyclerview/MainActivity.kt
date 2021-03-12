@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myrecyclerview.databinding.ActivityMainBinding
 
@@ -40,10 +41,18 @@ class MainActivity : AppCompatActivity() {
         return listHero
     }
 
+    // utk menampilkan dalam bentuk list view
     private fun showRecyclerList() {
         binding.rvHeroes.layoutManager = LinearLayoutManager(this)
         val listHeroAdapter = ListHeroAdapter(list)
         binding.rvHeroes.adapter = listHeroAdapter
+    }
+
+    // utk menampilkan dalam bentuk grid view
+    private fun showRecyclerGrid() {
+        binding.rvHeroes.layoutManager = GridLayoutManager(this, 2)
+        val gridHeroAdapter = GridHeroAdapter(list)
+        binding.rvHeroes.adapter = gridHeroAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -62,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 showRecyclerList()
             }
             R.id.action_grid -> {
-
+                showRecyclerGrid()
             }
             R.id.action_cardview -> {
 
