@@ -2,6 +2,7 @@ package com.example.myrecyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -15,6 +16,10 @@ class GridHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
                         .load(hero.photo)
                         .apply(RequestOptions().override(350, 550))
                         .into(imgItemPhoto)
+
+                itemView.setOnClickListener {
+                    Toast.makeText(itemView.context, "Kamu memilih ${hero.name}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
