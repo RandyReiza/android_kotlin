@@ -1,15 +1,20 @@
 package com.example.myrecyclerview
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myrecyclerview.databinding.ItemRowHeroBinding
 
 class ListHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adapter<ListHeroAdapter.ListViewHolder>() {
+
+    private var onItemClickCallback: OnItemClickCallback? = null
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     inner class ListViewHolder(private val binding: ItemRowHeroBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(hero: Hero) {
             with(binding) {
@@ -22,7 +27,7 @@ class ListHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
                 tvItemDescription.text = hero.description
 
                 itemView.setOnClickListener {
-                    Toast.makeText(itemView.context, "Kamu memilih ${hero.name}", Toast.LENGTH_SHORT).show()
+                    onItemClickCallback?.onItemClicked(hero)
                 }
             }
         }
@@ -39,4 +44,8 @@ class ListHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
     }
 
     override fun getItemCount(): Int = listHero.size
+
+    interface OnItemClickCallback {
+        fun onItemClicked(hero: Hero)
+    }
 }

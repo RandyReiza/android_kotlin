@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myrecyclerview.databinding.ActivityMainBinding
@@ -76,6 +77,12 @@ class MainActivity : AppCompatActivity() {
         binding.rvHeroes.layoutManager = LinearLayoutManager(this)
         val listHeroAdapter = ListHeroAdapter(list)
         binding.rvHeroes.adapter = listHeroAdapter
+
+        listHeroAdapter.setOnItemClickCallback(object : ListHeroAdapter.OnItemClickCallback {
+            override fun onItemClicked(hero: Hero) {
+                showSelectedHero(hero)
+            }
+        })
     }
 
     // utk menampilkan dalam bentuk grid view
@@ -83,6 +90,12 @@ class MainActivity : AppCompatActivity() {
         binding.rvHeroes.layoutManager = GridLayoutManager(this, 2)
         val gridHeroAdapter = GridHeroAdapter(list)
         binding.rvHeroes.adapter = gridHeroAdapter
+
+        gridHeroAdapter.setOnItemClickCallback(object : GridHeroAdapter.OnItemClickCallback {
+            override fun onItemClicked(hero: Hero) {
+                showSelectedHero(hero)
+            }
+        })
     }
 
     // utk menampilkan dalam bentuk card view
@@ -90,6 +103,12 @@ class MainActivity : AppCompatActivity() {
         binding.rvHeroes.layoutManager = LinearLayoutManager(this)
         val cardViewHeroAdapter = CardViewHeroAdapter(list)
         binding.rvHeroes.adapter = cardViewHeroAdapter
+
+        cardViewHeroAdapter.setOnclickCallback(object : CardViewHeroAdapter.OnItemClickCallback {
+            override fun onItemClicked(hero: Hero) {
+                showSelectedHero(hero)
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -124,5 +143,9 @@ class MainActivity : AppCompatActivity() {
     // untuk judul halaman
     private fun setActionBarTitle(title: String?) {
         supportActionBar?.title = title
+    }
+
+    private fun showSelectedHero(hero: Hero) {
+        Toast.makeText(this@MainActivity, "Kamu memilih ${hero.name}", Toast.LENGTH_SHORT).show()
     }
 }

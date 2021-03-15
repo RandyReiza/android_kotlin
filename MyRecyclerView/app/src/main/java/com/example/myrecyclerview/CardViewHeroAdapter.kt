@@ -8,8 +8,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myrecyclerview.databinding.ItemCardviewHeroBinding
 
-class CardViewHeroAdapter(private val listhero: ArrayList<Hero>) : RecyclerView.Adapter<CardViewHeroAdapter.CardViewViewHolder>() {
-    class CardViewViewHolder(private val binding: ItemCardviewHeroBinding) : RecyclerView.ViewHolder(binding.root) {
+class CardViewHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adapter<CardViewHeroAdapter.CardViewViewHolder>() {
+
+    private var onItemClickCallback: OnItemClickCallback? = null
+
+    fun setOnclickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
+    inner class CardViewViewHolder(private val binding: ItemCardviewHeroBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(hero: Hero) {
             with(binding) {
                 Glide.with(itemView.context)
@@ -21,7 +28,7 @@ class CardViewHeroAdapter(private val listhero: ArrayList<Hero>) : RecyclerView.
                 tvItemDescription.text = hero.description
 
                 itemView.setOnClickListener {
-                    Toast.makeText(itemView.context, "Kamu memilih ${hero.name}", Toast.LENGTH_SHORT).show()
+                    onItemClickCallback?.onItemClicked(hero)
                 }
                 btnSetFavorite.setOnClickListener {
                     Toast.makeText(itemView.context, "Favorite ${hero.name}", Toast.LENGTH_SHORT).show()
@@ -39,9 +46,13 @@ class CardViewHeroAdapter(private val listhero: ArrayList<Hero>) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: CardViewViewHolder, i: Int) {
-        holder.bind(listhero[i])
+        holder.bind(listHero[i])
     }
 
-    override fun getItemCount(): Int = listhero.size
+    override fun getItemCount(): Int = listHero.size
+
+    interface OnItemClickCallback {
+        fun onItemClicked(hero: Hero)
+    }
 
 }

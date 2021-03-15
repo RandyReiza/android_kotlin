@@ -2,14 +2,20 @@ package com.example.myrecyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myrecyclerview.databinding.ItemGridHeroBinding
 
 class GridHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adapter<GridHeroAdapter.GridViewHolder>() {
-    class GridViewHolder(private val binding: ItemGridHeroBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    private var onItemClickCallback: OnItemClickCallback? = null
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
+    inner class GridViewHolder(private val binding: ItemGridHeroBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(hero: Hero) {
             with(binding) {
                 Glide.with(itemView.context)
@@ -18,7 +24,7 @@ class GridHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
                         .into(imgItemPhoto)
 
                 itemView.setOnClickListener {
-                    Toast.makeText(itemView.context, "Kamu memilih ${hero.name}", Toast.LENGTH_SHORT).show()
+                    onItemClickCallback?.onItemClicked(hero)
                 }
             }
         }
@@ -35,4 +41,7 @@ class GridHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
 
     override fun getItemCount(): Int = listHero.size
 
+    interface OnItemClickCallback {
+        fun onItemClicked(hero: Hero)
+    }
 }
